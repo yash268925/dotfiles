@@ -145,3 +145,5 @@ let g:lightline = {
   \ 'colorscheme': 'iceberg',
   \ }
 
+" make popup to transparent
+set pumblend=20
