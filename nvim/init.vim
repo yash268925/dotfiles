@@ -1,5 +1,3 @@
-colorscheme wombat256
-
 set smartcase
 set smartindent
 set number
@@ -8,16 +6,16 @@ set foldcolumn=4
 set autoread
 set fileencodings=utf-8,iso-2022-jp-3,cp932,sjis,euc-jp,ucs-bom,guess,latin1
 set fileencoding=utf-8
-"set statusline=[%n]%F%m%r%h%w\ %{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y%=%{fugitive#statusline()}\(%1l/%L\)L,%cC%V%8P
 set laststatus=2
 set ignorecase
 set hlsearch
 set list
 set listchars=eol:$,tab:>-,space:.
 set wildignorecase
+set number relativenumber
 
 " project default setting
-" (overwrite with .vimrc.local in some Projects)
+" overwrite with .vimrc.local in some Projects
 set shiftwidth=2
 set tabstop=2
 set softtabstop=2
@@ -70,9 +68,6 @@ vnoremap <Space>p "+p
 "escape from terminal mode
 tnoremap <C-w>n <C-\><C-n>
 
-"change whitespace highlight color
-highlight Whitespace ctermfg=240
-
 " load global plugins
 call plug#begin()
 
@@ -92,6 +87,10 @@ Plug 'othree/html5.vim'
 Plug 'jeroenbourgois/vim-actionscript'
 Plug 'leafgarland/typescript-vim'
 Plug 'cespare/mxml.vim'
+
+Plug 'itchyny/lightline.vim'
+
+Plug 'cocopon/iceberg.vim'
 
 call plug#end()
 
@@ -134,3 +133,15 @@ function! s:vimrc_local(loc)
     source `=i`
   endfor
 endfunction
+
+" use iceberg colorscheme
+set termguicolors
+set cursorline
+
+colorscheme iceberg
+
+" use iceberg colorscheme with lightline
+let g:lightline = {
+  \ 'colorscheme': 'iceberg',
+  \ }
+
