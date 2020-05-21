@@ -2,7 +2,6 @@ set smartcase
 set smartindent
 set number
 set modeline
-set foldcolumn=4
 set autoread
 set fileencodings=utf-8,iso-2022-jp-3,cp932,sjis,euc-jp,ucs-bom,guess,latin1
 set fileencoding=utf-8
@@ -72,9 +71,11 @@ tnoremap <C-w>n <C-\><C-n>
 call plug#begin()
 
 Plug 'preservim/nerdtree'
+Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-fugitive'
+Plug 'jlanzarotta/bufexplorer'
+
 Plug 'dense-analysis/ale'
-Plug 'cakebaker/scss-syntax.vim'
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -84,11 +85,11 @@ Plug 'Shougo/neosnippet.vim',
 Plug 'Shougo/neosnippet-snippets'
 
 Plug 'othree/html5.vim'
+Plug 'cakebaker/scss-syntax.vim'
 Plug 'jeroenbourgois/vim-actionscript'
 Plug 'leafgarland/typescript-vim'
 Plug 'cespare/mxml.vim'
 
-Plug 'itchyny/lightline.vim'
 
 Plug 'cocopon/iceberg.vim'
 
@@ -141,8 +142,16 @@ set cursorline
 colorscheme iceberg
 
 " use iceberg colorscheme with lightline
+" use FugitiveHead with lightline
 let g:lightline = {
   \ 'colorscheme': 'iceberg',
+  \ 'active': {
+  \   'left': [ [ 'mode', 'paste' ],
+  \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+  \ },
+  \ 'component_function': {
+  \   'gitbranch': 'FugitiveHead'
+  \ },
   \ }
 
 " make popup to transparent
