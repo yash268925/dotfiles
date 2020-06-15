@@ -64,8 +64,11 @@ vnoremap <Space>y "+yy
 nnoremap <Space>p "+p
 vnoremap <Space>p "+p
 
-"escape from terminal mode
+" escape from terminal mode
 tnoremap <C-w>n <C-\><C-n>
+
+" re-syntax
+nnoremap <C-s> <Esc>:syntax sync fromstart<CR>
 
 " load global plugins
 call plug#begin()
@@ -75,14 +78,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'jlanzarotta/bufexplorer'
 
-Plug 'dense-analysis/ale'
-
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-endif
-
-Plug 'Shougo/neosnippet.vim',
-Plug 'Shougo/neosnippet-snippets'
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
 Plug 'othree/html5.vim'
 Plug 'cakebaker/scss-syntax.vim'
@@ -90,14 +86,9 @@ Plug 'jeroenbourgois/vim-actionscript'
 Plug 'leafgarland/typescript-vim'
 Plug 'cespare/mxml.vim'
 
-
 Plug 'cocopon/iceberg.vim'
 
 call plug#end()
-
-" use deoplete
-let g:python3_host_prog='/usr/local/bin/python3.7'
-let g:deoplete#enable_at_startup = 1
 
 " Plugin key-mappings.
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
@@ -156,3 +147,29 @@ let g:lightline = {
 
 " make popup to transparent
 set pumblend=20
+set winblend=20
+
+
+" === coc settings ===
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :CocCommand prettier.formatFile
+
+" ==========

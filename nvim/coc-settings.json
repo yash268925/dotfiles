@@ -1,0 +1,4 @@
+{
+  "eslint.filetypes": ["javascript", "typescript", "vue"],
+  "coc.preferences.formatOnSaveFiletypes": ["ts", "scss", "css"]
+}
