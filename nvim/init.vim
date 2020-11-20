@@ -74,11 +74,15 @@ nnoremap <C-s> <Esc>:syntax sync fromstart<CR>
 call plug#begin()
 
 Plug 'preservim/nerdtree'
+Plug 'jistr/vim-nerdtree-tabs'
 Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-fugitive'
+Plug 'iberianpig/tig-explorer.vim'
 Plug 'jlanzarotta/bufexplorer'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+Plug 'rhysd/conflict-marker.vim'
 
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'neoclide/coc.nvim', { 'branch': 'release', 'do': 'yarn install' }
 
 Plug 'othree/html5.vim'
 Plug 'cakebaker/scss-syntax.vim'
@@ -150,6 +154,15 @@ set pumblend=20
 set winblend=20
 
 
+" === conflict-marker settings ===
+highlight ConflictMarkerBegin guibg=#2f7366
+highlight ConflictMarkerOurs guibg=#2e5049
+highlight ConflictMarkerTheirs guibg=#344f69
+highlight ConflictMarkerEnd guibg=#2f628e
+highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
+" ==========
+
+
 " === coc settings ===
 
 " Use K to show documentation in preview window.
@@ -158,10 +171,15 @@ nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
   else
-    call CocAction('doHover')
+    execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
@@ -170,6 +188,6 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 " Add `:Format` command to format current buffer.
-command! -nargs=0 Format :CocCommand prettier.formatFile
+command! -nargs=0 Fix :CocCommand eslint.executeAutofix
 
 " ==========
