@@ -76,11 +76,15 @@ call plug#begin()
 Plug 'preservim/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'itchyny/lightline.vim'
-Plug 'tpope/vim-fugitive'
-Plug 'iberianpig/tig-explorer.vim'
 Plug 'jlanzarotta/bufexplorer'
+Plug 'kassio/neoterm'
+
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 Plug 'rhysd/conflict-marker.vim'
+
+Plug 'tpope/vim-fugitive'
+Plug 'iberianpig/tig-explorer.vim'
+Plug 'cohama/agit.vim'
 
 Plug 'neoclide/coc.nvim', { 'branch': 'release', 'do': 'yarn install' }
 
@@ -153,6 +157,11 @@ let g:lightline = {
 set pumblend=20
 set winblend=20
 
+" git editor config
+if has('nvim')
+  let $GIT_EDITOR = 'nvr -cc split --remote-wait'
+endif
+
 
 " === conflict-marker settings ===
 highlight ConflictMarkerBegin guibg=#2f7366
@@ -191,3 +200,15 @@ nmap <silent> gr <Plug>(coc-references)
 command! -nargs=0 Fix :CocCommand eslint.executeAutofix
 
 " ==========
+
+" === Agit keymaps ===
+autocmd FileType agit call s:agit_keymaps()
+
+function! s:agit_keymaps()
+  nmap <buffer> R <Plug>(agit-reload)
+endfunction
+" ==========
+
+" === neoterm settings ===
+let g:neoterm_default_mod='belowright'
+let g:neoterm_autoscroll=1
