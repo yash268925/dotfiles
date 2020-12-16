@@ -31,19 +31,17 @@ nnoremap sJ <C-w>J
 nnoremap sK <C-w>K
 nnoremap sL <C-w>L
 nnoremap sH <C-w>H
-nnoremap sn gt
-nnoremap sp gT
+nnoremap sN gt
+nnoremap sP gT
 nnoremap sr <C-w>r
 nnoremap s= <C-w>=
 nnoremap sw <C-w>w
-nnoremap sN :<C-u>bn<CR>
-nnoremap sP :<C-u>bp<CR>
+nnoremap sn :<C-u>bn<CR>
+nnoremap sp :<C-u>bp<CR>
 nnoremap st :<C-u>tabnew<CR>
 nnoremap sT :<C-u>Unite tab<CR>
 nnoremap ss :<C-u>sp<CR>
 nnoremap sv :<C-u>vs<CR>
-nnoremap sq :<C-u>q<CR>
-nnoremap sQ :<C-u>bd<CR>
 nnoremap <C-n> gt
 nnoremap <C-p> gT
 nnoremap t; t
@@ -79,6 +77,11 @@ Plug 'itchyny/lightline.vim'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'kassio/neoterm'
 
+Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
+Plug 'cocopon/iceberg.vim'
+Plug 'cocopon/vaffle.vim'
+Plug 'taohexxx/lightline-buffer'
+
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 Plug 'rhysd/conflict-marker.vim'
 
@@ -86,6 +89,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'iberianpig/tig-explorer.vim'
 Plug 'cohama/agit.vim'
 
+Plug 'editorconfig/editorconfig-vim'
 Plug 'neoclide/coc.nvim', { 'branch': 'release', 'do': 'yarn install' }
 
 Plug 'othree/html5.vim'
@@ -93,8 +97,6 @@ Plug 'cakebaker/scss-syntax.vim'
 Plug 'jeroenbourgois/vim-actionscript'
 Plug 'leafgarland/typescript-vim'
 Plug 'cespare/mxml.vim'
-
-Plug 'cocopon/iceberg.vim'
 
 call plug#end()
 
@@ -144,12 +146,32 @@ colorscheme iceberg
 " use FugitiveHead with lightline
 let g:lightline = {
   \ 'colorscheme': 'iceberg',
+  \ 'tabline': {
+  \   'left': [ [ 'bufferinfo' ],
+  \             [ 'separator' ],
+  \             [ 'bufferbefore', 'buffercurrent', 'bufferafter' ], ],
+  \   'right': [ [ 'close' ], ],
+  \ },
   \ 'active': {
   \   'left': [ [ 'mode', 'paste' ],
   \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
   \ },
   \ 'component_function': {
-  \   'gitbranch': 'FugitiveHead'
+  \   'gitbranch': 'FugitiveHead',
+  \   'bufferinfo': 'lightline#buffer#bufferinfo',
+  \ },
+  \ 'component_expand': {
+  \   'buffercurrent': 'lightline#buffer#buffercurrent',
+  \   'bufferbefore': 'lightline#buffer#bufferbefore',
+  \   'bufferafter': 'lightline#buffer#bufferafter',
+  \ },
+  \ 'component_type': {
+  \   'buffercurrent': 'tabsel',
+  \   'bufferbefore': 'raw',
+  \   'bufferafter': 'raw',
+  \ },
+  \ 'component': {
+  \   'separator': '',
   \ },
   \ }
 
@@ -210,5 +232,17 @@ endfunction
 " ==========
 
 " === neoterm settings ===
-let g:neoterm_default_mod='belowright'
 let g:neoterm_autoscroll=1
+" ==========
+
+" === Sayonara ===
+nnoremap sq :<C-u>Sayonara<CR>
+nnoremap sQ :<C-u>Sayonara!<CR>
+
+let g:sayonara_confirm_quit=1
+" ==========
+
+" === lightline-buffer settings ===
+set hidden
+set showtabline=2
+" ==========
