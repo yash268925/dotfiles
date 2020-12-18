@@ -58,10 +58,20 @@ zstyle ':completion:*:sudo:*' \
         /usr/X11R6/bin \
         /usr/local/git/bin
 
-eval $(gdircolors $HOME/.dircolors)
+if type dircolors > /dev/null 2>&1; then
+  eval $(dircolors $HOME/.dircolors)
+elif type gdircolors > /dev/null 2>&1; then
+  eval $(gdircolors $HOME/.dircolors)
+fi
 export ZLS_COLORS=$LS_COLORS
 export CLICOLOR=true
-alias ls="gls --color"
+
+if [[ $(/bin/ls --version | xargs | awk "{print $2}") =~ coreutils ]]; then
+  LS='ls'
+else
+  LS='gls'
+fi
+alias ls="$LS --color"
 
 export PROMPT=$'\n'"%F{220}${HOST}: %F{222}%~"$'\n'"%F{007}%# "
 
