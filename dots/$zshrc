@@ -66,7 +66,7 @@ fi
 export ZLS_COLORS=$LS_COLORS
 export CLICOLOR=true
 
-if [[ $(/bin/ls --version | xargs | awk "{print $2}") =~ coreutils ]]; then
+if [[ $(/bin/ls --version > /dev/null 2>&1| xargs | awk "{print $2}") =~ coreutils ]]; then
   LS='ls'
 else
   LS='gls'
