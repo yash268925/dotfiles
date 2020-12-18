@@ -86,8 +86,8 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 Plug 'rhysd/conflict-marker.vim'
 
 Plug 'tpope/vim-fugitive'
-Plug 'iberianpig/tig-explorer.vim'
 Plug 'cohama/agit.vim'
+Plug 'rhysd/committia.vim'
 
 Plug 'editorconfig/editorconfig-vim'
 Plug 'neoclide/coc.nvim', { 'branch': 'release', 'do': 'yarn install' }
@@ -195,7 +195,6 @@ highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
 
 
 " === coc settings ===
-
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
@@ -220,7 +219,6 @@ nmap <silent> gr <Plug>(coc-references)
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Fix :CocCommand eslint.executeAutofix
-
 " ==========
 
 " === Agit keymaps ===
@@ -233,6 +231,9 @@ endfunction
 
 " === neoterm settings ===
 let g:neoterm_autoscroll=1
+let g:neoterm_size=20
+let g:neoterm_fixedsize=1
+let g:neoterm_default_mod='bo'
 " ==========
 
 " === Sayonara ===
@@ -245,4 +246,8 @@ let g:sayonara_confirm_quit=1
 " === lightline-buffer settings ===
 set hidden
 set showtabline=2
+" ==========
+
+" === vaffle ===
+command! -nargs=0 Vc :call vaffle#init(expand('%:p:h'))
 " ==========
