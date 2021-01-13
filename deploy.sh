@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DEST="$HOME"
+DEST=${DEST:-"$HOME"}
 
 make_dir() {
   if [ ! -e $1 ] ; then
@@ -26,5 +26,5 @@ make_link() {
 make_dir $DEST
 make_dir $DEST/.config
 
-make_link "$(pwd)/dots" $DEST
-make_link "$(pwd)/config" $DEST/.config
+make_link "$(dirname $0)/dots" $DEST
+make_link "$(dirname $0)/config" $DEST/.config
