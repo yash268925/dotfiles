@@ -97,6 +97,7 @@ Plug 'cakebaker/scss-syntax.vim'
 Plug 'jeroenbourgois/vim-actionscript'
 Plug 'leafgarland/typescript-vim'
 Plug 'cespare/mxml.vim'
+Plug 'rust-lang/rust.vim'
 
 call plug#end()
 
